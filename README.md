@@ -4,7 +4,7 @@ Faster Duck Duck go Bangs! in any broswer... maybe even in no browser at all!
 
 
 ## How Use? 
-All you need to do is dowload or copy the !Bang@Home.html file and click to open it and BOOM your banging in the comfort of your own home!
+All you need to do is download or copy the !Bang@Home.html file and click to open it and BOOM your banging in the comfort of your own home!
 
 This janky solution allows for for cool things such as setting up linux terminal alias to call bangs or what i did in making a keyboard shortcut to auto open this file quickly at any time!
 The possibilites are endless really use it how you want to! Customize it to your hearts content! No digging around files trying to figure out how the project works its just one file to rule them all!
@@ -13,9 +13,9 @@ The possibilites are endless really use it how you want to! Customize it to your
 ## What R Bangs?
 
 Bangs! are a really neat way of searching the internet made by DuckDuckGo.
-They work by having a set list of mappings that allow you to type "!" followed by  the first letter or two of a site and BANG it takes you to that site. The real neat thing is you can appeand queries to the end of the bangs so you can actually search within the site your naviagating to directly from the bang search! 
+They work by having a set list of mappings that allow you to type "!" followed by the first letter or two of a site and BANG it takes you to that site. The real neat thing is you can append queries to the end of the bangs so you can actually search within the site your naviagating to directly from the bang search! 
 
-Example: say i want to search for Coffee Cups on amazon. Instead of needing to click to open a browser type in amazon then in amazon search for coffee cups i can simply open the Bang@Home File type !a coffee cups... and it will take me directly search amazon for coffee cups!
+Example: say i want to search for Coffee Cups on amazon. Instead of needing to click to open a browser, type in amazon, then in amazon search for coffee cups,  I can simply open the Bang@Home File type "!a coffee cups" ... and it will  directly search amazon for coffee cups!
 
 Heres More: 
 
