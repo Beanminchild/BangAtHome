@@ -54,7 +54,7 @@ TLDR;
 
 DuckDuckGo Bangs are serverside this works client side!
 
-Oose, forked from Unduck, Stores DuckDuckGo's bang mapping file locally and uses your chosen dns to resolve not theirs. 
+!Bang@Home , forked from Unduck, Stores DuckDuckGo's bang mapping file locally and uses your chosen dns to resolve not theirs. 
 
 ## What Framework?
 Framework? whats that? this project is held up by raw html, some javascript and an educated wish. Try to mess this S##t up npm left-pad!!
