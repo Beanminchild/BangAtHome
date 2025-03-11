@@ -9,7 +9,7 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Arial','San Francisco Text';
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -21,8 +21,8 @@
         linear-gradient(var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) 0 -1px,
         linear-gradient(90deg, var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) -1px 0;
       background-size: var(--circle-size, 100px) var(--circle-size, 100px), var(--circle-size, 100px) var(--circle-size, 100px), 100px 100px, 100px 100px;
-      background-color: #333;
-      transition: background 0.5s; /* Smooth transition for background change */
+      background-color: #333333;
+      transition: background 0.0s; /* Smooth transition for background change */
     }
     .search-container {
       display: flex;
@@ -103,6 +103,24 @@
       Include "!" in search
     </label>
     <div>
+  <label for="fallbackSearch">Fallback Search Engine:</label>
+  <select id="fallbackSearch">
+    <option value="g">Google</option>
+    <option value="ddg">DuckDuckGo</option>
+    <option value="ai">DuckAI</option>
+    <option value="b">Bing</option>
+    <option value="brave">Brave</option>
+    <option value="y">Yahoo!</option>
+    <option value="ai">ChatGPT</option>
+    <option value="ai">Claude</option>
+
+
+
+    <!-- Add more options as needed -->
+  </select>
+</div>
+
+    <div>
       <label for="circleToggle">Show Circles:</label>
       <input type="checkbox" id="circleToggle" />
     </div>
@@ -123,6 +141,21 @@
 </div>
 
 <script type="module">
+ // allow for ui fallback search engine select
+const fallbackSearch = document.getElementById('fallbackSearch');
+let ourlordandsavior = localStorage.getItem('fallbackSearchEngine') || 'ddg'; // Default to 'ddg'
+
+// Set the dropdown to the saved value
+fallbackSearch.value = ourlordandsavior;
+
+// Update ourlordandsavior and save to localStorage when the dropdown changes
+fallbackSearch.onchange = function() {
+  ourlordandsavior = this.value;
+  localStorage.setItem('fallbackSearchEngine', ourlordandsavior);
+};
+
+
+
   // Automatically focus the search input when the page loads
   window.onload = function() {
     const searchInput = document.getElementById('searchInput');
@@ -227,6 +260,9 @@ document.addEventListener('click', (event) => {
     searchInput.focus(); // Refocus the search input
   };
 
+
+
+
   const input = document.getElementById('searchInput');
   const button = document.getElementById('searchBtn');
 
@@ -238,7 +274,7 @@ document.addEventListener('click', (event) => {
       const selectedBang = bangs.find((b) => b.t === bangCandidate);
       const customBangFirst= customBangs.find((b) => b.t === customBangCandidate);
       const google = 'g'
-      const ourlordandsavior = 'ddg'
+
       const fallbackBang = bangs.find((b) => b.t === ourlordandsavior);
 
 
