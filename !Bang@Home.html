@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Unduck</title>
   <link rel="search" type="application/opensearchdescription+xml" title="Local Search" href="opensearch.xml">
   <style>
@@ -22,11 +23,12 @@
         linear-gradient(90deg, var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) -1px 0;
       background-size: var(--circle-size, 100px) var(--circle-size, 100px), var(--circle-size, 100px) var(--circle-size, 100px), 100px 100px, 100px 100px;
       background-color: #333333;
-      transition: background 0.0s; /* Smooth transition for background change */
+      transition: background 0.0hs; /* Smooth transition for background change */
     }
     .search-container {
       display: flex;
       gap: 8px;
+      width:500px;
       background: rgba(0, 0, 0, 0.5);
       padding: 16px;
       border-radius: 8px;
@@ -34,6 +36,7 @@
     }
     .search-input {
       padding: 8px;
+      width:500px;
       font-size: 16px;
       border: 2px solid #fff;
       border-radius: 4px;
@@ -85,6 +88,34 @@
       background: rgba(255, 255, 255, 0.8);
       color: #000;
     }
+
+    @media only screen and (max-width: 600px) {
+  body {
+    flex-direction: column !important;
+    padding: 10px !important;
+  }
+  .search-container {
+    flex-direction: column !important;
+    padding: 10px !important;
+    max-width: 100% !important;
+  }
+  .search-input {
+    width: 100% !important;
+    padding: 10px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+  }
+  .search-button {
+    width: 100% !important;
+    padding: 10px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+  }
+}
+}
+
+
+
   </style>
 </head>
 <body>
@@ -360,12 +391,12 @@ document.addEventListener('click', (event) => {
  const customBangs = [
             {
                 "c": "TEST FIRST",
-                "d": "pornhub.com",
+                "d": "github.com",
                 "r": 0,
-                "s": "removing theos ai to go back to free duckai",
-                "sc": "PH",
-                "t": "ph",
-                "u": "https://www.pornhub.com/video/search?search={{{s}}}"
+                "s": "Bang at Home Web Browser",
+                "sc": "BAH",
+                "t": "bah",
+                "u": "https://github.com/TheMeanBeanMachine/BangAtHome"
             },
         ];
 
@@ -385,7 +416,7 @@ document.addEventListener('click', (event) => {
       s: "removing theos ai to go back to free duckai",
       sc: "AI",
       t: "ai",
-      u: "https://www.duck.ai?q={{{s}}}&ia=chat&bang=true",
+      u: "https://duckduckgo.com/?q={{{s}}}&ia=chat&bang=true",
     },
     {
       c: "Tech",
