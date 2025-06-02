@@ -10,7 +10,7 @@ This janky solution allows for for cool things such as setting up linux terminal
 The possibilites are endless really use it how you want to! Customize it to your hearts content! No digging around files trying to figure out how the project works its just one file to rule them all!
 
 If you dont want to download anything Bang@home also has a web version here: https://bangathome.free.nf/  
-The site  offers  the same speed benefits of the standalone html file as well as an easy method to add edit or delete you own custome bangs which are then stored in the local cache of your browser.
+The site  offers  the same speed benefits of the standalone html file as well as an easy method to add edit or delete you own custom bangs which are then stored in the local cache of your browser.
 
 
 
