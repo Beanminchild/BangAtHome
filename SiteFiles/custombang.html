@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Bangs Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background:
+                radial-gradient(circle, transparent 20%, rgba(255,255,255,.1) 21%, rgba(255,255,255,.1) 30%, transparent 31%, transparent 50%) var(--circle-size, 100px) var(--circle-size, 100px),
+                radial-gradient(circle, transparent 20%, rgba(255,255,255,.1) 21%, rgba(255,255,255,.1) 30%, transparent 31%, transparent 50%) 50px 50px,
+                linear-gradient(var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) 0 -1px,
+                linear-gradient(90deg, var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) -1px 0;
+            background-size: var(--circle-size, 100px) var(--circle-size, 100px), var(--circle-size, 100px) var(--circle-size, 100px), 100px 100px, 100px 100px;
+            background-color: #333333;
+            transition: background 0.0hs;
+            color: #e0e0e0;
+        }
+        header {
+            background: #23272b;
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #333;
+        }
+        main {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: #23272b;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #0008;
+            padding: 2rem;
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: #98FB98;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: #202428;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        form input, form button {
+            font-size: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: none;
+        }
+        form input {
+            background: #181c20;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            flex: 1 1 120px;
+        }
+        form button {
+            background: #98FB98;
+            color: #000000b7;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        form button:hover {
+            background: #82d682;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #181c20;
+            margin-bottom: 1rem;
+        }
+        th, td {
+            padding: 0.6rem;
+            border-bottom: 1px solid #98FB98;
+            text-align: left;
+        }
+        th {
+            color: #98FB98;
+            background: #23272b;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .actions button {
+            margin-right: 0.5rem;
+            background: #424242;
+            color: #fff;
+            border: none;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .actions button.edit { background: #388e3c; }
+        .actions button.edit:hover { background: #2e7031; }
+        .actions button.delete { background: #d32f2f; }
+        .actions button.delete:hover { background: #b71c1c; }
+        @media (max-width: 600px) {
+            main { padding: 1rem; }
+            form { flex-direction: column; gap: 0.5rem; }
+            th, td { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+   !B@H Custom Bangs Manager
+    </header>
+    <main>
+        <h2>Add or Edit a Custom Bang</h2>
+        <form id="bangForm">
+            <input type="hidden" id="editIndex" value="">
+            <input type="text" id="c" placeholder="Name (c)" required>
+            <input type="text" id="d" placeholder="Domain (d)" required>
+            <input type="number" id="r" placeholder="Rank (r)" min="0" value="0" required>
+            <input type="text" id="s" placeholder="Description (s)" required>
+            <input type="text" id="sc" placeholder="Short Code (sc)" required>
+            <input type="text" id="t" placeholder="Tag (t)" required>
+            <input type="url" id="u" placeholder="URL (u)" required>
+            <button type="submit" id="submitBtn">Add Bang</button>
+        </form>
+        <h2>Your Custom Bangs</h2>
+        <table id="bangsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Domain</th>
+                    <th>Rank</th>
+                    <th>Description</th>
+                    <th>Short</th>
+                    <th>Tag</th>
+                    <th>URL</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Bangs will be rendered here -->
+            </tbody>
+        </table>
+        <p style="font-size:0.95em;color:#aaa;">
+            Custom bangs are stored in your browser and override default bangs in <b>!Bang@Home Search</b>.
+        </p>
+    </main>
+    <script>
+ // --- Apply background settings from localStorage (copied from index.html) ---
+        function updateBackgroundFromStorage() {
+            const showCircles = localStorage.getItem('showCircles') === 'true';
+            const showGridLines = localStorage.getItem('showGridLines') === 'true';
+            const bgColor = localStorage.getItem('backgroundColor') || '#333333';
+            const gridCol = localStorage.getItem('gridColor') || '#4CAF50';
+
+            document.body.style.setProperty('--grid-color', showGridLines ? gridCol : 'transparent');
+            document.body.style.setProperty('--circle-size', showCircles ? '100px' : '0px');
+            document.body.style.backgroundColor = bgColor;
+        }
+        updateBackgroundFromStorage();
+
+
+        // --- Storage Key ---
+        const STORAGE_KEY = 'customBangs';
+
+        // --- Load Bangs ---
+        function loadBangs() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            if (!data) return [];
+            try {
+                return JSON.parse(data);
+            } catch {
+                return [];
+            }
+        }
+
+        // --- Save Bangs ---
+        function saveBangs(bangs) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(bangs));
+        }
+
+        // --- Render Table ---
+        function renderTable() {
+            const bangs = loadBangs();
+            const tbody = document.querySelector('#bangsTable tbody');
+            tbody.innerHTML = '';
+            if (bangs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#888;">No custom bangs yet.</td></tr>`;
+                return;
+            }
+            bangs.forEach((bang, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${bang.c}</td>
+                    <td>${bang.d}</td>
+                    <td>${bang.r}</td>
+                    <td>${bang.s}</td>
+                    <td>${bang.sc}</td>
+                    <td>${bang.t}</td>
+                    <td><a href="${bang.u}" target="_blank" style="color:#90caf9;">link</a></td>
+                    <td class="actions">
+                        <button class="edit" data-idx="${idx}">Edit</button>
+                        <button class="delete" data-idx="${idx}">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- Handle Form Submit ---
+        document.getElementById('bangForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const c = document.getElementById('c').value.trim();
+            const d = document.getElementById('d').value.trim();
+            const r = parseInt(document.getElementById('r').value, 10) || 0;
+            const s = document.getElementById('s').value.trim();
+            const sc = document.getElementById('sc').value.trim();
+            const t = document.getElementById('t').value.trim();
+            const u = document.getElementById('u').value.trim();
+            const editIndex = document.getElementById('editIndex').value;
+
+            let bangs = loadBangs();
+
+            const bangObj = { c, d, r, s, sc, t, u };
+
+            if (editIndex !== '') {
+                // Edit mode
+                bangs[editIndex] = bangObj;
+            } else {
+                // Add mode
+                bangs.push(bangObj);
+            }
+            saveBangs(bangs);
+            renderTable();
+            this.reset();
+            document.getElementById('editIndex').value = '';
+            document.getElementById('submitBtn').textContent = 'Add Bang';
+        });
+
+        // --- Handle Edit/Delete ---
+        document.querySelector('#bangsTable tbody').addEventListener('click', function(e) {
+            if (e.target.classList.contains('edit')) {
+                const idx = e.target.getAttribute('data-idx');
+                const bangs = loadBangs();
+                const bang = bangs[idx];
+                document.getElementById('c').value = bang.c;
+                document.getElementById('d').value = bang.d;
+                document.getElementById('r').value = bang.r;
+                document.getElementById('s').value = bang.s;
+                document.getElementById('sc').value = bang.sc;
+                document.getElementById('t').value = bang.t;
+                document.getElementById('u').value = bang.u;
+                document.getElementById('editIndex').value = idx;
+                document.getElementById('submitBtn').textContent = 'Save Changes';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            if (e.target.classList.contains('delete')) {
+                const idx = e.target.getAttribute('data-idx');
+                if (confirm('Delete this custom bang?')) {
+                    let bangs = loadBangs();
+                    bangs.splice(idx, 1);
+                    saveBangs(bangs);
+                    renderTable();
+                }
+            }
+        });
+
+        // --- Initial Render ---
+        renderTable();
+    </script>
+</body>
+</html>

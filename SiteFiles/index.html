@@ -1,0 +1,457 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>!Bang@Home</title>
+  <link rel="search" type="application/opensearchdescription+xml" title="Local Search" href="opensearch.xml">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial','San Francisco Text';
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background:
+        radial-gradient(circle, transparent 20%, rgba(255,255,255,.1) 21%, rgba(255,255,255,.1) 30%, transparent 31%, transparent 50%) var(--circle-size, 100px) var(--circle-size, 100px),
+        radial-gradient(circle, transparent 20%, rgba(255,255,255,.1) 21%, rgba(255,255,255,.1) 30%, transparent 31%, transparent 50%) 50px 50px,
+        linear-gradient(var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) 0 -1px,
+        linear-gradient(90deg, var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) -1px 0;
+      background-size: var(--circle-size, 100px) var(--circle-size, 100px), var(--circle-size, 100px) var(--circle-size, 100px), 100px 100px, 100px 100px;
+      background-color: #333333;
+      transition: background 0.0hs; /* Smooth transition for background change */
+    }
+    .search-container {
+      display: flex;
+      gap: 8px;
+      width:500px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 16px;
+      border-radius: 8px;
+      position: relative; /* Added for dropdown positioning */
+    }
+    .search-input {
+      padding: 8px;
+      width:500px;
+      font-size: 16px;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+    }
+    .search-button {
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+    }
+    .search-button:hover {
+      background: rgba(255, 255, 255, 1);
+    }
+    .options-button {
+      padding: 8px;
+      cursor: pointer;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+    }
+    .options-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 4px;
+      padding: 8px;
+      z-index: 10;
+    }
+    .options-menu label {
+      color: #fff;
+    }
+    .options-menu input {
+      margin-left: 8px;
+    }
+    .reset-button {
+      margin-top: 8px;
+      padding: 8px;
+      cursor: pointer;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+    }
+
+    @media only screen and (max-width: 600px) {
+  body {
+    flex-direction: column !important;
+    padding: 10px !important;
+  }
+  .search-container {
+    flex-direction: column !important;
+    padding: 10px !important;
+    max-width: 85% !important;
+  }
+  .search-input {
+    width: 100% !important;
+    padding: 10px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+  }
+  .search-button {
+    width: 100% !important;
+    padding: 10px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="search-container">
+  <input
+          id="searchInput"
+          class="search-input"
+          type="text"
+          placeholder="Type your query..."
+  />
+  <button id="searchBtn" class="search-button">Search</button>
+  <button id="optionsBtn" class="options-button">Options</button>
+  <div id="optionsMenu" class="options-menu">
+      <label>
+      <input type="checkbox" id="includeBang" />
+      Include "!" in search
+    </label>
+    <div>
+  <label for="fallbackSearch">Fallback Search Engine:</label>
+  <select id="fallbackSearch">
+    <option value="g">Google</option>
+    <option value="ddg">DuckDuckGo</option>
+    <option value="ai">DuckAI</option>
+    <option value="b">Bing</option>
+    <option value="brave">Brave</option>
+    <option value="y">Yahoo!</option>
+    <option value="ai">ChatGPT</option>
+    <option value="ai">Claude</option>
+
+
+
+    <!-- Add more options as needed -->
+  </select>
+</div>
+
+    <div>
+      <label for="circleToggle">Show Circles:</label>
+      <input type="checkbox" id="circleToggle" />
+    </div>
+    <div>
+      <label for="gridToggle">Show Grid Lines:</label>
+      <input type="checkbox" id="gridToggle" />
+    </div>
+    <div>
+      <label for="backgroundColor">Background Color:</label>
+      <input type="color" id="backgroundColor" />
+    </div>
+    <div>
+      <label for="gridColor">Grid Line Color:</label>
+      <input type="color" id="gridColor" />
+    </div>
+    <div>
+    <button id="customizeBangButton" class="reset-button">Customize !Bangs</button>
+    </div>
+    <button id="resetButton" class="reset-button">Reset to Default</button>
+  </div>
+</div>
+
+<!-- ...existing code... -->
+<script type="module">
+
+// allow for ui fallback search engine select
+const fallbackSearch = document.getElementById('fallbackSearch');
+let ourlordandsavior = localStorage.getItem('fallbackSearchEngine') || 'ddg'; // Default to 'ddg'
+
+// Set the dropdown to the saved value
+fallbackSearch.value = ourlordandsavior;
+
+// Update ourlordandsavior and save to localStorage when the dropdown changes
+fallbackSearch.onchange = function() {
+  ourlordandsavior = this.value;
+  localStorage.setItem('fallbackSearchEngine', ourlordandsavior);
+};
+
+
+
+  // Automatically focus the search input when the page loads
+  window.onload = function() {
+    const searchInput = document.getElementById('searchInput');
+    const includeBang = document.getElementById('includeBang');
+    const circleToggle = document.getElementById('circleToggle');
+    const gridToggle = document.getElementById('gridToggle');
+    const backgroundColor = document.getElementById('backgroundColor');
+    const gridColor = document.getElementById('gridColor');
+
+    // Check if the option to include "!" is saved in localStorage
+    if (localStorage.getItem('includeBang') === 'true') {
+      includeBang.checked = true;
+      searchInput.value = '!';
+    }
+
+    // Load saved options from localStorage
+    circleToggle.checked = localStorage.getItem('showCircles') === 'true';
+    gridToggle.checked = localStorage.getItem('showGridLines') === 'true';
+    const savedBackgroundColor = localStorage.getItem('backgroundColor') || '#333333';
+    const savedGridColor = localStorage.getItem('gridColor') || '#4CAF50';
+    backgroundColor.value = savedBackgroundColor;
+    gridColor.value = savedGridColor;
+
+    // Set the initial background
+    updateBackground();
+
+    // Focus the search input
+    searchInput.focus();
+  };
+
+  // Toggle options menu visibility
+const optionsBtn = document.getElementById('optionsBtn');
+const optionsMenu = document.getElementById('optionsMenu');
+
+optionsBtn.onclick = function() {
+  optionsMenu.style.display = optionsMenu.style.display === 'block' ? 'none' : 'block';
+};
+
+document.addEventListener('click', (event) => {
+  if (!optionsMenu.contains(event.target) && event.target !== optionsBtn) {
+    optionsMenu.style.display = 'none';
+  }
+});
+
+
+
+  // Save the state of the checkbox in localStorage
+  document.getElementById('includeBang').onchange = function() {
+    localStorage.setItem('includeBang', this.checked);
+    const searchInput = document.getElementById('searchInput');
+    if (this.checked) {
+      searchInput.value = '!';
+    } else {
+      searchInput.value = searchInput.value.replace(/^!/, ''); // Remove "!" if unchecked
+    }
+  };
+
+  // Update background based on toggles and colors
+  function updateBackground() {
+    const showCircles = document.getElementById('circleToggle').checked;
+    const showGridLines = document.getElementById('gridToggle').checked;
+    const bgColor = document.getElementById('backgroundColor').value;
+    const gridCol = document.getElementById('gridColor').value;
+
+    // Set CSS variables for background
+    document.body.style.setProperty('--grid-color', showGridLines ? gridCol : 'transparent');
+    document.body.style.setProperty('--circle-size', showCircles ? '100px' : '0px');
+    document.body.style.backgroundColor = bgColor;
+
+    // Save options to localStorage
+    localStorage.setItem('showCircles', showCircles);
+    localStorage.setItem('showGridLines', showGridLines);
+    localStorage.setItem('backgroundColor', bgColor);
+    localStorage.setItem('gridColor', gridCol);
+  }
+
+  // Event listeners for toggles and color pickers
+  document.getElementById('circleToggle').onchange = updateBackground;
+  document.getElementById('gridToggle').onchange = updateBackground;
+  document.getElementById('backgroundColor').oninput = updateBackground;
+  document.getElementById('gridColor').oninput = updateBackground;
+
+  // Reset to default settings
+  document.getElementById('resetButton').onclick = function() {
+    // Clear localStorage
+    localStorage.clear();
+    localStorage.removeItem('bangsCache'); // Clear the bangs cache
+
+    // Reset checkboxes and color inputs to default values
+    includeBang.checked = false;
+    circleToggle.checked = true; // Default to showing circles
+    gridToggle.checked = true; // Default to showing grid
+
+    backgroundColor.value = '#333333'; // Default background color
+    gridColor.value = '#4CAF50'; // Default grid line color
+
+    // Update the background with default settings
+    updateBackground();
+
+    // Reset the search input
+    const searchInput = document.getElementById('searchInput');
+    searchInput.value = ''; // Clear the search input
+    searchInput.focus(); // Refocus the search input
+  };
+
+
+  // Handle the customization button click
+  document.getElementById('customizeBangButton').onclick = function() {
+    // Redirect to the custom bang page
+    window.location.href = 'custombangs.html';
+  };
+
+
+
+  const input = document.getElementById('searchInput');
+  const button = document.getElementById('searchBtn');
+
+
+
+// Helper to fetch and cache the bangs array from GitHub
+async function fetchBangs() {
+  // Try to get from localStorage first
+  const cached = localStorage.getItem('bangsCache');
+  if (cached) {
+    try {
+      return JSON.parse(cached);
+    } catch {
+      // If cache is corrupted, fall through to fetch
+    }
+  }
+  // Fetch from GitHub if not cached
+  const rawUrl = 'https://raw.githubusercontent.com/Beanminchild/BangAtHome/main/SiteFiles_IGNORE/bang.js';
+  const jsText = await fetch(rawUrl).then(r => r.text());
+  // Extract the 'bangs' array from the JS file
+  const match = jsText.match(/export\s+const\s+bangs\s*=\s*(\[[\s\S]*?\]);/);
+  if (!match) throw new Error('Could not find bangs array in remote file');
+  // eslint-disable-next-line no-eval
+  const bangsArr = eval('(' + match[1] + ')');
+  // Cache it for next time
+  localStorage.setItem('bangsCache', JSON.stringify(bangsArr));
+  return bangsArr;
+}
+
+  // const input = document.getElementById('searchInput');
+  // const button = document.getElementById('searchBtn');
+
+  let bangs = [];
+
+  async function handleSearch(query) {
+    customBangs = getCustomBangs(); // Always refresh!
+    if (!bangs.length) {
+      try {
+        bangs = await fetchBangs();
+      } catch (e) {
+        alert('Failed to load bangs list.');
+        return;
+      }
+    }
+    if (query) {
+      const match = query.match(/!(\S+)/i);
+      const bangCandidate = match?.[1]?.toLowerCase();
+      const customBangCandidate = match?.[1]?.toLowerCase();
+      const selectedBang = bangs.find((b) => b.t === bangCandidate);
+      const customBangFirst= customBangs.find((b) => b.t === customBangCandidate);
+      const google = 'g'
+
+      const fallbackBang = bangs.find((b) => b.t === ourlordandsavior);
+
+
+      if (customBangFirst) {
+        const cleanQuery = query.replace(/!\S+\s*/i, '').trim();
+        const searchUrl = customBangFirst.u.replace('{{{s}}}', encodeURIComponent(cleanQuery).replace(/%2F/g, '/'));
+        window.location.replace(searchUrl);
+      } else {
+          if (selectedBang) {
+        const cleanQuery = query.replace(/!\S+\s*/i, '').trim();
+        const searchUrl = selectedBang.u.replace('{{{s}}}', encodeURIComponent(cleanQuery).replace(/%2F/g, '/'));
+        window.location.replace(searchUrl);
+      } else {
+        //if all else fails... search google... will update to allow browser selection.
+        const cleanQuery = query.replace(/!\S+\s*/i, '').trim();
+        const searchUrl = fallbackBang.u.replace('{{{s}}}', encodeURIComponent(cleanQuery).replace(/%2F/g, '/'));
+        window.location.replace(searchUrl);
+
+      }
+      }
+    }
+  }
+  
+
+  function getQueryFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('q') || '';
+  }
+
+  button.addEventListener('click', () => handleSearch(input.value.trim()));
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleSearch(input.value.trim());
+  });
+
+  // Handle search query from URL if present
+  const initialQuery = getQueryFromUrl();
+  if (initialQuery) {
+    input.value = initialQuery;
+    handleSearch(initialQuery);
+  }
+
+  // Dynamically set the template URL in the opensearch.xml file
+  const opensearchLink = document.querySelector('link[rel="search"]');
+  if (opensearchLink) {
+    const currentUrl = window.location.href;
+    const opensearchUrl = new URL(opensearchLink.href, currentUrl);
+    fetch(opensearchUrl)
+      .then(response => response.text())
+      .then(text => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(text, "application/xml");
+        const urlElement = xmlDoc.querySelector('Url[type="text/html"]');
+        if (urlElement) {
+          urlElement.setAttribute('template', `${currentUrl}?q={searchTerms}`);
+          const serializer = new XMLSerializer();
+          const updatedXml = serializer.serializeToString(xmlDoc);
+          const blob = new Blob([updatedXml], { type: 'application/xml' });
+          const blobUrl = URL.createObjectURL(blob);
+          opensearchLink.href = blobUrl;
+        }
+      });
+  }
+
+
+
+  // custom bangs are checked first and will override default bangs!!!
+ // ...existing code...
+
+function getCustomBangs() {
+    try {
+        const data = localStorage.getItem('customBangs');
+        if (!data) return [];
+        return JSON.parse(data);
+    } catch {
+        return [];
+    }
+}
+
+let customBangs = getCustomBangs();
+
+
+
+// ...existing code...
+
+ 
+  
+
+  // Example usage of custom bangs
+  // You can add, edit, or delete custom bangs as needed
+  // For example, to add a new custom bang:
+  // customBangs.push({ c: 'c', d: 'd', r: 'r', s: 's', sc: 'sc', t: 't', u: 'u' });
+  // saveCustomBangs(customBangs);
+</script>
+<!-- ...existing code... -->
+</body>
+</html>
