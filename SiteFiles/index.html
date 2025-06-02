@@ -324,7 +324,7 @@ async function fetchBangs() {
     }
   }
   // Fetch from GitHub if not cached
-  const rawUrl = 'https://raw.githubusercontent.com/Beanminchild/BangAtHome/main/SiteFiles_IGNORE/bang.js';
+  const rawUrl = 'https://raw.githubusercontent.com/Beanminchild/BangAtHome/main/SiteFiles/bang.js';
   const jsText = await fetch(rawUrl).then(r => r.text());
   // Extract the 'bangs' array from the JS file
   const match = jsText.match(/export\s+const\s+bangs\s*=\s*(\[[\s\S]*?\]);/);
