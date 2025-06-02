@@ -279,6 +279,7 @@ document.addEventListener('click', (event) => {
   document.getElementById('resetButton').onclick = function() {
     // Clear localStorage
     localStorage.clear();
+    localStorage.removeItem('bangsCache'); // Clear the bangs cache
 
     // Reset checkboxes and color inputs to default values
     includeBang.checked = false;
@@ -311,18 +312,29 @@ document.addEventListener('click', (event) => {
 
 
 
-  // Helper to fetch and eval the bangs array from GitHub
-  async function fetchBangs() {
-    // Use the raw.githubusercontent.com URL, not the github.com URL
-    const rawUrl = 'https://raw.githubusercontent.com/Beanminchild/BangAtHome/main/SiteFiles_IGNORE/bang.js';
-    const jsText = await fetch(rawUrl).then(r => r.text());
-    // Extract the 'bangs' array from the JS file
-    // This assumes the file exports: export const bangs = [...]
-    const match = jsText.match(/export\s+const\s+bangs\s*=\s*(\[[\s\S]*?\]);/);
-    if (!match) throw new Error('Could not find bangs array in remote file');
-    // eslint-disable-next-line no-eval
-    return eval('(' + match[1] + ')');
+// Helper to fetch and cache the bangs array from GitHub
+async function fetchBangs() {
+  // Try to get from localStorage first
+  const cached = localStorage.getItem('bangsCache');
+  if (cached) {
+    try {
+      return JSON.parse(cached);
+    } catch {
+      // If cache is corrupted, fall through to fetch
+    }
   }
+  // Fetch from GitHub if not cached
+  const rawUrl = 'https://raw.githubusercontent.com/Beanminchild/BangAtHome/main/SiteFiles_IGNORE/bang.js';
+  const jsText = await fetch(rawUrl).then(r => r.text());
+  // Extract the 'bangs' array from the JS file
+  const match = jsText.match(/export\s+const\s+bangs\s*=\s*(\[[\s\S]*?\]);/);
+  if (!match) throw new Error('Could not find bangs array in remote file');
+  // eslint-disable-next-line no-eval
+  const bangsArr = eval('(' + match[1] + ')');
+  // Cache it for next time
+  localStorage.setItem('bangsCache', JSON.stringify(bangsArr));
+  return bangsArr;
+}
 
   // const input = document.getElementById('searchInput');
   // const button = document.getElementById('searchBtn');

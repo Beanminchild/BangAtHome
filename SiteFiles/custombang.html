@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
-            background: #181c20;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background:
+                radial-gradient(circle, transparent 20%, rgba(255,255,255,.1) 21%, rgba(255,255,255,.1) 30%, transparent 31%, transparent 50%) var(--circle-size, 100px) var(--circle-size, 100px),
+                radial-gradient(circle, transparent 20%, rgba(255,255,255,.1) 21%, rgba(255,255,255,.1) 30%, transparent 31%, transparent 50%) 50px 50px,
+                linear-gradient(var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) 0 -1px,
+                linear-gradient(90deg, var(--grid-color, #4CAF50) var(--grid-line-size, 2px), transparent var(--grid-line-size, 2px)) -1px 0;
+            background-size: var(--circle-size, 100px) var(--circle-size, 100px), var(--circle-size, 100px) var(--circle-size, 100px), 100px 100px, 100px 100px;
+            background-color: #333333;
+            transition: background 0.0hs;
+            color: #e0e0e0;
         }
         header {
             background: #23272b;
@@ -31,7 +38,7 @@
         h2 {
             margin-top: 0;
             font-size: 1.3rem;
-            color: #90caf9;
+            color: #98FB98;
         }
         form {
             display: flex;
@@ -55,13 +62,13 @@
             flex: 1 1 120px;
         }
         form button {
-            background: #1976d2;
-            color: #fff;
+            background: #98FB98;
+            color: #000000b7;
             cursor: pointer;
             transition: background 0.2s;
         }
         form button:hover {
-            background: #1565c0;
+            background: #82d682;
         }
         table {
             width: 100%;
@@ -71,11 +78,11 @@
         }
         th, td {
             padding: 0.6rem;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #98FB98;
             text-align: left;
         }
         th {
-            color: #90caf9;
+            color: #98FB98;
             background: #23272b;
         }
         tr:last-child td {
@@ -104,7 +111,7 @@
 </head>
 <body>
     <header>
-        Custom Bangs Manager
+   !B@H Custom Bangs Manager
     </header>
     <main>
         <h2>Add or Edit a Custom Bang</h2>
@@ -142,6 +149,20 @@
         </p>
     </main>
     <script>
+ // --- Apply background settings from localStorage (copied from index.html) ---
+        function updateBackgroundFromStorage() {
+            const showCircles = localStorage.getItem('showCircles') === 'true';
+            const showGridLines = localStorage.getItem('showGridLines') === 'true';
+            const bgColor = localStorage.getItem('backgroundColor') || '#333333';
+            const gridCol = localStorage.getItem('gridColor') || '#4CAF50';
+
+            document.body.style.setProperty('--grid-color', showGridLines ? gridCol : 'transparent');
+            document.body.style.setProperty('--circle-size', showCircles ? '100px' : '0px');
+            document.body.style.backgroundColor = bgColor;
+        }
+        updateBackgroundFromStorage();
+
+
         // --- Storage Key ---
         const STORAGE_KEY = 'customBangs';
 
