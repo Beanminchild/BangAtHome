@@ -9,6 +9,10 @@ All you need to do is download or copy the !Bang@Home.html file and click to ope
 This janky solution allows for for cool things such as setting up linux terminal alias to call bangs or what i did in making a keyboard shortcut to auto open this file quickly at any time!
 The possibilites are endless really use it how you want to! Customize it to your hearts content! No digging around files trying to figure out how the project works its just one file to rule them all!
 
+If you dont want to use the file method Bang@home also has a web version here: https://bangathome.free.nf/  
+The site alos offers an easy method to add edit or delete you own custome bangs which are then stored in the local cache of your browser.
+
+
 
 ## What R Bangs?
 
