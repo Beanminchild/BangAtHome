@@ -67,5 +67,5 @@ Framework? whats that? this project is held up by raw html, some javascript and 
 ## Extra
 I will continue to add more features to this so if you like stay tuned.
 
-I also will be making a real site you can use like Unduck if the using a random file from the internet turns you off. But honestly if you dont want to use the janky one file solution id humbly suggest you just use Unduck its great!
+
 
