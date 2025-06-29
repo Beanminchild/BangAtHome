@@ -65,7 +65,7 @@ Framework? whats that? this project is held up by raw html, some javascript and 
 
 
 ## Extra
-I will continue to add more features to this so if you like stay tuned.
+I will continue to add more features to this so if you like stay tuned...
 
 
 
