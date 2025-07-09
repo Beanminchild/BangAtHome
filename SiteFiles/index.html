@@ -171,6 +171,11 @@
     <div>
     <button id="customizeBangButton" class="reset-button">Customize !Bangs</button>
     </div>
+    <div>
+    <button id="bingRewardsButton" class="reset-button">Bing Rewards Boost</button>
+    <label class='small-label'>Max bing rewards in a single click</label>
+    </div>
+    <div>
     <button id="resetButton" class="reset-button">Reset to Default</button>
   </div>
 </div>
@@ -305,6 +310,18 @@ document.addEventListener('click', (event) => {
     window.location.href = 'custombangs.html';
   };
 
+  // Handle the Bing Rewards Boost button click
+  document.getElementById('bingRewardsButton').onclick = function() {
+  const randomWords = [
+    "cat", "dog", "banana", "car", "music", "space", "robot", "mountain", "river", "book",
+    "coffee", "sunset", "ocean", "pizza", "movie", "tree", "cloud", "guitar", "train", "flower",
+    "moon", "star", "city", "bird", "game", "apple", "history", "science", "art", "travel"
+  ];
+  for (let i = 0; i < 20; i++) {
+    const word = randomWords[Math.floor(Math.random() * randomWords.length)] + Math.floor(Math.random() * 10000);
+    window.open(`https://www.bing.com/search?q=${encodeURIComponent(word)}`, '_blank');
+  }
+};
 
 
   const input = document.getElementById('searchInput');
