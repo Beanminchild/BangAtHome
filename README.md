@@ -11,6 +11,7 @@ The possibilites are endless really use it how you want to! Customize it to your
 
 If you dont want to download anything Bang@home also has a web version here: https://bangathome.free.nf/  
 The site  offers  the same speed benefits of the standalone html file as well as an easy method to add edit or delete you own custom bangs which are then stored in the local cache of your browser.
+**in order to be able to append search queries to bangs make sure to add '{{{S}}}' to the end of your links when adding them to the bangs manager
 
 
 
