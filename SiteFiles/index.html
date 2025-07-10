@@ -310,18 +310,54 @@ document.addEventListener('click', (event) => {
     window.location.href = 'custombangs.html';
   };
 
-  // Handle the Bing Rewards Boost button click
+  // Handle the Bing Rewards Boost button click  
   document.getElementById('bingRewardsButton').onclick = function() {
-  const randomWords = [
-    "cat", "dog", "banana", "car", "music", "space", "robot", "mountain", "river", "book",
-    "coffee", "sunset", "ocean", "pizza", "movie", "tree", "cloud", "guitar", "train", "flower",
-    "moon", "star", "city", "bird", "game", "apple", "history", "science", "art", "travel"
-  ];
-  for (let i = 0; i < 20; i++) {
-    const word = randomWords[Math.floor(Math.random() * randomWords.length)] + Math.floor(Math.random() * 10000);
-    window.open(`https://www.bing.com/search?q=${encodeURIComponent(word)}`, '_blank');
+    const nouns = [
+      "cat", "dog", "banana", "car", "music", "space", "robot", "mountain", "river", "book",
+      "coffee", "sunset", "ocean", "pizza", "movie", "tree", "cloud", "guitar", "train", "flower",
+      "moon", "star", "city", "bird", "game", "apple", "history", "science", "art", "travel"
+    ];
+    const verbs = [
+      "eat", "play", "visit", "see", "find", "make", "draw", "explore", "enjoy", "learn", "watch",
+      "buy", "read", "cook", "paint", "discover", "travel", "sing", "grow", "build"
+    ];
+    const adjectives = [
+      "best", "easy", "funny", "cheap", "fast", "beautiful", "strange", "delicious", "famous", "old",
+      "new", "popular", "healthy", "quick", "simple"
+    ];
+    const questionTemplates = [
+      "How to {verb} a {noun}?",
+      "What is the {adjective} way to {verb} {noun}s?",
+      "Why do people like {noun}s?",
+      "Best places to {verb} in the {noun}.",
+      "Can you {verb} a {adjective} {noun}?",
+      "Top 10 {adjective} {noun}s.",
+      "Is it safe to {verb} {noun}s?",
+      "Where can I find a {adjective} {noun}?",
+      "Tips for {verb}ing {noun}s.",
+      "What happens if you {verb} a {noun}?"
+    ];
+  
+    function random(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+  
+    for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      let template = random(questionTemplates);
+      let query = template
+        .replace('{noun}', random(nouns))
+        .replace('{noun}', random(nouns))
+        .replace('{verb}', random(verbs))
+        .replace('{verb}', random(verbs))
+        .replace('{adjective}', random(adjectives))
+        .replace('{adjective}', random(adjectives));
+      if (Math.random() < 0.3) query += ' ' + Math.floor(Math.random() * 10000);
+      window.open(`https://www.bing.com/search?q=${encodeURIComponent(query)}`, '_blank');
+    }, i * 15000); // 15 seconds between each tab
   }
 };
+  // ...existing code..
 
 
   const input = document.getElementById('searchInput');
