@@ -19,6 +19,8 @@ The site  offers  the same speed benefits of the standalone html file as well as
 
 I recommend and personally use the website version most. Its the most convenient way to get into banging at home.
 
+https://bangathome.free.nf/
+
 ## What R Bangs?
 
 Bangs! are a really neat way of searching the internet made by DuckDuckGo.
