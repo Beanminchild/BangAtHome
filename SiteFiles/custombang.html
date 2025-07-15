@@ -205,10 +205,20 @@
         <p style="font-size:0.95em;color:#aaa;">
             Custom bangs are stored in your browser and override default bangs in <b>!Bang@Home Search</b>.
         </p>
-        <div style="text-align:center; margin-bottom:2rem;">
+        <div style="display:flex; gap:1em; margin-bottom:1.5em;">
+        <button id="exportBtn" style="padding:0.6em 1.5em; border-radius:6px; background:#90caf9; color:#222; border:none; cursor:pointer;">Backup Bangs</button>
+        <label style="padding:0.8em 1.0em; border-radius:6px; background:#ffd54f; color:#222; border:none; cursor:pointer;">
+                Import Bangs
+        <input type="file" id="importInput" accept=".json" style="display:none;">
+        </label>
         <button onclick="window.location.href='index.html'" style="padding:0.7em 2em; font-size:1.1em; border-radius:7px; background:#98FB98; color:#222; border:none; cursor:pointer; transition:background 0.2s;">
             ← Back to Search
         </button>
+        <!-- ...existing code... -->
+
+        
+</div>
+<!-- ...existing code... -->
     </div>
     </main>
     <script>
@@ -330,6 +340,46 @@
                 }
             }
         });
+
+
+        // ...existing code...
+
+// --- Export Bangs ---
+document.getElementById('exportBtn').addEventListener('click', function() {
+    const bangs = loadBangs();
+    const blob = new Blob([JSON.stringify(bangs, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'custom_bangs.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+});
+
+// --- Import Bangs ---
+document.getElementById('importInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+        try {
+            const imported = JSON.parse(evt.target.result);
+            if (!Array.isArray(imported)) throw new Error('Invalid format');
+            saveBangs(imported);
+            renderTable();
+            alert('Custom bangs imported successfully!');
+        } catch {
+            alert('Failed to import: Invalid file format.');
+        }
+    };
+    reader.readAsText(file);
+    // Reset input so same file can be re-imported if needed
+    e.target.value = '';
+});
+
+// ...existing code...
 
         // --- Initial Render ---
         renderTable();
