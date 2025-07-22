@@ -6,7 +6,7 @@ Faster Duck Duck go Bangs! in any broswer... maybe even in no browser at all!
 ## How Use? 
 All you need to do is download or copy the !Bang@Home.html file and click to open it and BOOM your banging in the comfort of your own home!
 
-This janky solution allows for extremely fast loading as you can do what i did in making a keyboard shortcut to auto open this file quickly at any time!
+This janky solution allows for extremely fast loading. So its great for doing what i did and making a keyboard shortcut to auto open this file quickly at any time!
 The possibilites are endless really use it how you want to! Customize it to your hearts content! No digging around files trying to figure out how the project works its just one file to rule them all!
 
 If you dont want to download anything Bang@home also has a web version here: https://bangathome.free.nf/  
