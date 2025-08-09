@@ -453,6 +453,24 @@ async function fetchBangs() {
     handleSearch(initialQuery);
   }
 
+
+  async function handleInitialQuery() {
+    const initialQuery = getQueryFromUrl();
+    if (initialQuery && initialQuery.trim()) {
+      input.value = initialQuery;
+      if (!bangs.length) {
+        try {
+          bangs = await fetchBangs();
+        } catch (e) {
+          alert('Failed to load bangs list.');
+          return;
+        }
+      }
+      handleSearch(initialQuery);
+    }
+  }
+  handleInitialQuery();
+
   // Dynamically set the template URL in the opensearch.xml file
   const opensearchLink = document.querySelector('link[rel="search"]');
   if (opensearchLink) {
