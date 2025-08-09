@@ -15,7 +15,7 @@ The site  offers  the same speed benefits of the standalone html file as well as
 
 **in order to be able to append search queries to bangs make sure to add '{{{S}}}' to the end of your links when adding them to the bangs manager. Look at bang.js for examples if needed.
 
-Additionally you can also add the following URL as a custom search engine to your browser. Enables all of DuckDuckGo's bangs to work, but much faster.
+Additionally you can also add the following URL as a custom search engine to your browser. Enables all of DuckDuckGo's  and  your custom bangs to work, but much faster!
 
 *https://bangathome.free.nf/?q=%s*
 
