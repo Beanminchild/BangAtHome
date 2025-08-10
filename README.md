@@ -1,6 +1,6 @@
 # !Bang@Home
 
-Faster Duck Duck go Bangs! in any broswer... maybe even in no browser at all!
+Faster Duck Duck go Bangs! in any browser... maybe even in no browser at all!
 
 
 ## How Use? 
