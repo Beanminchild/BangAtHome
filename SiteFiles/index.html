@@ -172,8 +172,8 @@
     <button id="customizeBangButton" class="reset-button">Customize !Bangs</button>
     </div>
     <div>
-    <button id="bingRewardsButton" class="reset-button">Bing Rewards Boost</button>
-    <label class='small-label'>Max bing rewards in a single click</label>
+    <button id="stegButton" class="reset-button">Steg@Home</button>
+    <label class='small-label'>Hide text files in PNG images</label>
     </div>
     <div>
     <button id="resetButton" class="reset-button">Reset to Default</button>
@@ -308,6 +308,12 @@ document.addEventListener('click', (event) => {
   document.getElementById('customizeBangButton').onclick = function() {
     // Redirect to the custom bang page
     window.location.href = 'custombangs.html';
+  };
+
+  // Handle the steg@home button click
+  document.getElementById('stegButton').onclick = function() {
+    // Redirect to the custom bang page
+    window.location.href = 'steg.html';
   };
 
   // Handle the Bing Rewards Boost button click  
