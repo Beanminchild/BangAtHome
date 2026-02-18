@@ -75,6 +75,27 @@ DuckDuckGo Bangs are serverside this works client side!
 Framework? whats that? this project is held up by raw html, some javascript and an educated wish. Try to mess this up npm left-pad!!
 
 
+
+## Custom Bangs 
+There is now a button in the options menu to add custom bangs!
+
+This streamlines the process of making custom bangs by now allowing you to do it all in the UI.
+
+As a reminder, custom bangs are checked first so they will override any existing default duckduckgo bangs. This allows you to easily change the mapping of existing bangs or add new ones without worrying about them being blocked by some obscure site you never heard of.
+
+This feature also offers the ability to backup and import existing custom bangs. This allows you to easily transfer your custom bangs to a new device, restore after an accidental browser cache clear or share them with friends!
+
+
+## Steg@Home 
+
+There is now a button in the options file to go to steg@home page.
+
+This is a mini steganography tool that allows you to hide text files in  images as well as decrypt them.
+
+I do not recommend using this for any majorly sensitive information and I claim no responsibility for any data loss or security breaches that may occur from using this tool. This is just a fun little project I made to learn about steganography and how it works.
+
+
+
 ## Extra
 I will continue to add more features to this so if you like stay tuned...
 
